@@ -124,8 +124,6 @@ Menu: **Policy & Objects → IPv4 Policy → Create New**
 
 ---
 
-Se quiser transformar isso em um **README completo**, adicionar **prints**, um **diagrama** ou deixar com estilo de documentação oficial, posso montar para você também!
-
 Menu: Policy & Objects → Services → Create New
 Serviço	Porta	Protocolo
 SMB	TCP 445	TCP
