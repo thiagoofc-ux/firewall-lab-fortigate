@@ -1,39 +1,130 @@
-Laboratório Firewall FortiGate – Segmentação, Bloqueios e Testes com Kali + Metasploitable
+#  Laboratório Firewall FortiGate – Segmentação, Bloqueios e Testes com Kali + Metasploitable
 
-Autor: Thiago Alves
-Objetivo: Demonstrar domínio prático em firewall, segmentação, bloqueio de portas perigosas, políticas de segurança e validação dos bloqueios usando Kali Linux e Metasploitable.
+**Autor:** Thiago Alves  
+**Objetivo:** Demonstrar domínio prático em firewall, segmentação, bloqueio de portas perigosas, criação de políticas, NAT e validação dos bloqueios usando **Kali Linux** e **Metasploitable**.
 
-1. Topologia do Ambiente
+---
 
-port1 → LAN (192.168.10.1/24)
-port2 → WAN (DHCP / NAT ativo)
-Hosts internos utilizados no LAB:
-Kali Linux → 192.168.10.x
-Metasploitable → 192.168.10.x
-Arquivo sugerido: imagens/topologia.png
+##  Topologia do Ambiente
 
-2. Configuração das Interfaces
-   
-LAN – port1
+**Interfaces:**
+- **port1 → LAN:** `192.168.10.1/24`
+- **port2 → WAN:** DHCP / NAT habilitado
 
-IP: 192.168.10.1/24
-Role: LAN
-Administrative Access: HTTPS, PING, SSH (opcional)
-DHCP Server: opcional
-WAN – port2
-Modo: DHCP Client
-NAT habilitado
+**Hosts Internos:**
+- **Kali Linux →** `192.168.10.x`
+- **Metasploitable →** `192.168.10.x`
 
-3. Objetos de Rede (Address Objects)
+**Imagem recomendada:**  
+`imagens/topologia.png`
 
-Menu: Policy & Objects → Addresses
-LAN_Internal → 192.168.10.0/24
+---
 
-Hosts opcionais:
-Kali_Host → 192.168.10.x
-Metasploitable_Host → 192.168.10.x
+##  Configuração das Interfaces
 
-4. Serviços Criados (Portas Perigosas)
+### **LAN – port1**
+- **IP:** `192.168.10.1/24`
+- **Role:** LAN
+- **Administrative Access:** HTTPS, PING, SSH (opcional)
+- **DHCP Server:** opcional
+
+### **WAN – port2**
+- **Modo:** DHCP Client  
+- **NAT:** habilitado
+
+---
+
+##  Objetos de Rede (Address Objects)
+
+Menu: **Policy & Objects → Addresses**
+
+- `LAN_Internal` → `192.168.10.0/24`
+
+**Hosts opcionais:**
+- `Kali_Host` → `192.168.10.x`
+- `Metasploitable_Host` → `192.168.10.x`
+
+---
+
+##  Serviços Criados (Portas Perigosas)
+
+Menu: **Policy & Objects → Services → Create New**
+
+| Serviço  | Porta       | Protocolo |
+|----------|-------------|-----------|
+| SMB      | TCP 445     | TCP       |
+| TELNET   | TCP 23      | TCP       |
+| RPC      | TCP 135     | TCP       |
+| NETBIOS  | TCP/UDP 137–139 | TCP/UDP |
+
+### **Grupo de Serviços (opcional):**
+`Portas_Perigosas`  
+Contém:
+- SMB  
+- TELNET  
+- RPC  
+- NETBIOS  
+
+---
+
+##  Política de Bloqueio (DENY)
+
+Menu: **Policy & Objects → IPv4 Policy → Create New**
+
+- **Nome:** `Bloqueio_Portas_Populares`
+- **Incoming Interface:** port1
+- **Outgoing Interface:** Any
+- **Source:** `LAN_Internal`
+- **Destination:** All
+- **Service:** `Portas_Perigosas`
+- **Action:** **DENY**
+- **Logging:** Enabled
+- **NAT:** Off
+
+---
+
+##  Política de Acesso LAN → Internet
+
+- **Nome:** `LAN_para_Internet`
+- **Incoming:** port1
+- **Outgoing:** port2
+- **Source:** `LAN_Internal`
+- **Destination:** All
+- **Service:** ALL
+- **Action:** **ACCEPT**
+- **NAT:** On
+
+**Security Profiles (opcional):**
+- IPS → `IPS_Basic`
+- AntiVirus
+- WebFilter
+
+---
+
+##  Testes Realizados
+
+###  Conectividade
+- A LAN acessa a internet normalmente.
+
+###  Bloqueios
+- Portas **445 (SMB)**, **23 (TELNET)** e **135 (RPC)** bloqueadas com sucesso.
+- Logs visíveis em:  
+  **Log & Report → Forward Traffic**
+
+###  IPS
+- Detecta tentativas anormais vindas do Kali.
+
+###  Comunicação Interna
+- Kali ↔ Metasploitable funcionando.
+
+###  Ferramentas utilizadas:
+- `ping`
+- `hping3` (SYN Flood)
+- `nmap` (scan das portas bloqueadas)
+
+---
+
+Se quiser transformar isso em um **README completo**, adicionar **prints**, um **diagrama** ou deixar com estilo de documentação oficial, posso montar para você também!
 
 Menu: Policy & Objects → Services → Create New
 Serviço	Porta	Protocolo
