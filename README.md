@@ -1,4 +1,4 @@
-# 🔥 LAB de Firewall Fortigate – Segmentação, Regras, IPS e Testes Práticos
+#  LAB de Firewall Fortigate – Segmentação, Regras, IPS e Testes Práticos
 
 Este repositório apresenta um laboratório completo utilizando o **FortiGate (emulador FortiVM Free)**, com foco em segurança de rede aplicada, seguindo práticas exigidas em vagas de **Analista de Segurança da Informação Júnior**.
 
@@ -15,7 +15,7 @@ O projeto inclui:
 
 ---
 
-## 📌 Estrutura do projeto
+##  Estrutura do projeto
 
 ### `/configuracao/`
 Arquivos técnicos, passo a passo e regras:
@@ -36,7 +36,7 @@ Pasta destinada aos prints coletados do ambiente real:
 
 ---
 
-## 🏗 Tecnologias utilizadas
+##  Tecnologias utilizadas
 
 - **FortiGate FortiVM (Emulador Free)**
 - **Kali Linux**
@@ -45,7 +45,7 @@ Pasta destinada aos prints coletados do ambiente real:
 
 ---
 
-## 🎯 Objetivo principal
+##  Objetivo principal
 
 Demonstrar na prática:
 
@@ -58,7 +58,7 @@ Demonstrar na prática:
 
 ---
 
-## 🧪 Testes realizados
+##  Testes realizados
 
 Os testes estão documentados em `/configuracao/testes.md`, incluindo:
 
@@ -72,7 +72,7 @@ Os testes estão documentados em `/configuracao/testes.md`, incluindo:
 
 ---
 
-## 📸 Evidências
+##  Evidências
 
 Todos os prints se encontram na pasta:
 
